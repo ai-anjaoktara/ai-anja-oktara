@@ -53,8 +53,7 @@ const data=await res.json();
 if(!res.ok)throw new Error(data.error||'Terjadi kesalahan');
 loading.textContent=data.reply;
 }catch(err){
-loading.textContent='Backend AI belum terhubung. Kita perlu memasang backend dan API key terlebih dahulu.';
-}
+loading.textContent=loading.textContent='Error: '+err.message;
 });
 
 function tambah(teks,jenis){
@@ -68,4 +67,3 @@ return el;
 </script>
 </body>
 </html>
-
