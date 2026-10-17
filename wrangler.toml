@@ -1,0 +1,5 @@
+
+name = "ai-anja-oktara"
+main = "functions/api/chat.js"
+compatibility_date = "2026-10-17"
+

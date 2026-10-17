@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Anja Oktara</title>
+<style>
+body{margin:0;background:#0b1120;color:white;font-family:Arial,sans-serif;padding:20px}
+header{text-align:center;padding:25px;color:#a9baff}
+h1{color:#9b8cff}
+#chat{height:55vh;overflow:auto;background:#111b2e;border-radius:15px;padding:12px}
+.msg{padding:12px;margin:10px 0;border-radius:12px;background:#24324c;white-space:pre-wrap}
+.user{background:#5c65d9}
+form{display:flex;gap:8px;margin-top:12px}
+input{flex:1;min-width:0;padding:14px;border-radius:10px;border:0;background:#17243b;color:white}
+button{padding:12px;border:0;border-radius:10px;background:#786bff;color:white}
+small{color:#aab5ce}
+</style>
+</head>
+<body>
+<header>
+<h1>✦ AI Anja Oktara</h1>
+<p>Asisten AI pribadi kamu</p>
+<small>Versi awal website</small>
+</header>
+<div id="chat">
+<div class="msg">Halo! Saya AI Anja Oktara. Ada yang ingin kamu tanyakan?</div>
+</div>
+<form id="form">
+<input id="pesan" placeholder="Tulis pesan..." autocomplete="off">
+<button>Kirim</button>
+</form>
+<script>
+const form=document.getElementById('form');
+const input=document.getElementById('pesan');
+const chat=document.getElementById('chat');
+
+form.addEventListener('submit',async function(e){
+e.preventDefault();
+const pesan=input.value.trim();
+if(!pesan)return;
+tambah(pesan,'user');
+input.value='';
+const loading=tambah('Sedang berpikir...','bot');
+try{
+const res=await fetch('/api/chat',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({messages:[{role:'user',content:pesan}]})
+});
+const data=await res.json();
+if(!res.ok)throw new Error(data.error||'Terjadi kesalahan');
+loading.textContent=data.reply;
+}catch(err){
+loading.textContent='Backend AI belum terhubung. Kita perlu memasang backend dan API key terlebih dahulu.';
+}
+});
+
+function tambah(teks,jenis){
+const el=document.createElement('div');
+el.className='msg '+jenis;
+el.textContent=teks;
+chat.appendChild(el);
+chat.scrollTop=chat.scrollHeight;
+return el;
+}
+</script>
+</body>
+</html>
+
