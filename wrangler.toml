@@ -1,5 +1,3 @@
-
 name = "ai-anja-oktara"
-main = "functions/api/chat.js"
+pages_build_output_dir = "./public"
 compatibility_date = "2026-10-17"
-
